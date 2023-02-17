@@ -74,6 +74,7 @@ const createUser = async (req = request, res = response) => {
 
 const deleteUser = async (req = request, res = response) => {
   const { id } = req.params;
+  const { authenticatedUser } = req;
 
   //Borrado total
   // const user = await Usuario.findByIdAndRemove( id );
@@ -84,7 +85,8 @@ const deleteUser = async (req = request, res = response) => {
 
 
   res.json({
-    user
+    user,
+    authenticatedUser
   })
 }
 
