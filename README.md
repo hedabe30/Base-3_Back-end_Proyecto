@@ -10,3 +10,4 @@ Base de Back-end.
 - Buenas practicas en organizacion de datos y errores.
 - Autenteicación de usuarios por medio de JWT.
 - Validación y acceso a rutas segun el role.
+- Signin y signout con google
