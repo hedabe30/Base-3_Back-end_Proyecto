@@ -1,6 +1,8 @@
-const Role = require('../database/models/role');
-const Usuario = require('../database/models/user');
+const { Category, Usuario, Role } = require('../database/models');
 
+/**
+ * Roles
+*/
 const roleIsValid = async (role = '') => {
   const roleExist = await Role.findOne({ role });
   if (!roleExist) {
@@ -8,7 +10,10 @@ const roleIsValid = async (role = '') => {
   }
 }
 
-  //Verificar si el correo existe
+/**
+ * Usuarios
+*/
+//Verificar si el correo existe
 const mailVerification = async (email = '') => {
   const mailValidation = await Usuario.findOne({ email });
 
@@ -21,12 +26,25 @@ const idMongoVerification = async (id) => {
   const idValidation = await Usuario.findById(id);
 
   if ( !idValidation ) {
-    throw new Error(`El ${id} no existe`);
+    throw new Error(`El id: ${id} no existe`);
+  }
+}
+
+
+/**
+ * Categorias
+*/
+const categoryExist = async (id) => {
+  const idValidation = await Category.findById(id);
+
+  if ( !idValidation ) {
+    throw new Error(`El id: ${id} no existe`);
   }
 }
 
 module.exports = {
   roleIsValid,
   mailVerification,
-  idMongoVerification
+  idMongoVerification,
+  categoryExist
 }
