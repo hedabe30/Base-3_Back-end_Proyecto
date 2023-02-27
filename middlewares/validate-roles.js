@@ -1,7 +1,7 @@
 
 
 const sadminRole = (req, res, next) => {
-  console.log(req.authenticatedUser)
+  // console.log(req.authenticatedUser)
 
   if (!req.authenticatedUser) {
     return res.status(500).json({

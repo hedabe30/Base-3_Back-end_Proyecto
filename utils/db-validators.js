@@ -1,4 +1,4 @@
-const { Category, Usuario, Role } = require('../database/models');
+const { Category, Product, Usuario, Role } = require('../database/models');
 
 /**
  * Roles
@@ -42,9 +42,21 @@ const categoryExist = async (id) => {
   }
 }
 
+/**
+ * Productos
+*/
+const productExist = async (id) => {
+  const idValidation = await Product.findById(id);
+
+  if ( !idValidation ) {
+    throw new Error(`El id: ${id} no existe`);
+  }
+}
+
 module.exports = {
   roleIsValid,
   mailVerification,
   idMongoVerification,
-  categoryExist
+  categoryExist,
+  productExist
 }
