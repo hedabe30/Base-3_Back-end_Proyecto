@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors');
+const morgan = require('morgan')
 const { dbConnection } = require('../database/config');
 
 class Server {
@@ -31,6 +32,9 @@ class Server {
   }
 
   middlewares() {
+
+    //Mostrar peticiones
+    this.app.use(morgan('tiny'));
 
     //cors
     this.app.use(cors());

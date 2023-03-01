@@ -3,6 +3,6 @@ const searchController = require('../controllers/search.controller');
 
 const router = Router();
 
-router.get('/', searchController.search)
+router.get('/:collection/:term', searchController.search)
 
 module.exports = router;
