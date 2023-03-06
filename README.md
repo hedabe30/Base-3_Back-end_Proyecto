@@ -11,3 +11,5 @@ Base de Back-end.
 - Autenteicación de usuarios por medio de JWT.
 - Validación y acceso a rutas segun el role.
 - Signin y signout con google
+- Se crea en BD las colecciones de categorias y productos
+- Se genera un buscador para los usuarios, categorias y productos
