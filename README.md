@@ -13,3 +13,6 @@ Base de Back-end.
 - Signin y signout con google
 - Se crea en BD las colecciones de categorias y productos
 - Se genera un buscador para los usuarios, categorias y productos
+- Se genera end-point para cargar archivos (en el mismo servidor)
+- Se genera end-point para cargar imagenes para los usuarios y productos (en el mismo servidor)
+- Se genera end-point para mostrar las imagenes de los usuarios y productos (en el mismo servidor)
