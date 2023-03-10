@@ -1,6 +1,9 @@
 const path = require('path');
 const fs = require('fs');
 
+const cloudinary = require('cloudinary').v2;
+cloudinary.config(process.env.CLOUDINARY_URL)
+
 const { uploadFile } = require("../utils");
 
 const { User, Product } = require('../database/models')
@@ -57,65 +60,25 @@ const updateImage = async (req, res) => {
   //Limpiar imagenes existentes
   if (model.img) {
     //Hay que borrar la imagen del servidor
-    const pathImage = path.join(__dirname, '../uploads', collection, model.img);
-    if (fs.existsSync(pathImage)) {
-      fs.unlinkSync( pathImage ); 
-    }
+    const arrName = model.img.split('/');
+    const name = arrName[arrName.length - 1];
+    const [ public_id ] = name.split('.');
+    cloudinary.uploader.destroy( public_id );
   }
 
-  const name = await uploadFile(req.files, undefined, collection);
-  model.img = name
+  const { tempFilePath } = req.files.file;
+
+  const { secure_url } = await cloudinary.uploader.upload(tempFilePath);
+  
+  // const name = await uploadFile(req.files, undefined, collection);
+  model.img = secure_url
 
   await model.save();
 
   res.json(model)
 }
 
-const showImage = async (req, res) => {
-  const { id, collection } = req.params
-
-  let model;
-
-  switch (collection) {
-    case 'users':
-      model = await User.findById(id);
-      if (!model) {
-        return res.status(400).json({
-          msg: `No existe el usuario con id: ${id}`
-        });
-      } 
-
-      break;
-
-    case 'products':
-      model = await Product.findById(id);
-      if (!model) {
-        return res.status(400).json({
-          msg: `No existe el producto con id: ${id}`
-        });
-      } 
-
-      break;
-  
-    default:
-      return res.status(500).json({msg: 'Sin desarrollar'})
-  }
-
-  //Verificar si la imagen existe
-  if (model.img) {
-    const pathImage = path.join(__dirname, '../uploads', collection, model.img);
-    if (fs.existsSync(pathImage)) {
-      return res.sendFile(pathImage); 
-    }
-  }
-
-  const pathImage = path.join(__dirname, '../assets/no-image.jpg');
-  
-  res.sendFile(pathImage)
-}
-
 module.exports = {
   uploadFiles,
-  updateImage,
-  showImage
+  updateImage
 }

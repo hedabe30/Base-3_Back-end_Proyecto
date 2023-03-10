@@ -17,10 +17,4 @@ router.put('/:collection/:id', [
   validateFields
 ], uploadsController.updateImage);
 
-router.get('/:collection/:id', [
-  check('id', 'El id debe ser de Mongo').isMongoId(),
-  check('collection').custom( c => collectionsAllowed(c, ['users', 'products'])),
-  validateFields
-], uploadsController.showImage);
-
 module.exports = router;
