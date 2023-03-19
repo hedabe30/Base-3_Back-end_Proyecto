@@ -4,12 +4,15 @@ const morgan = require('morgan')
 const fileUpload = require('express-fileupload');
 
 const { dbConnection } = require('../database/config');
+const { socketController } = require('../sockets/socket.controller');
 
 class Server {
 
   constructor () {
     this.app = express();
     this.port = process.env.PORT || 3000;
+    this.server = require('http').createServer( this.app );
+    this.io = require('socket.io')(this.server);
 
     this.paths = {
       auth:   '/api/auth',
@@ -28,6 +31,9 @@ class Server {
 
     //Rutas de la App
     this.routes();
+
+    //Sockets
+    this.sockets();
   }
 
   async connectDB () {
@@ -68,8 +74,12 @@ class Server {
 
   }
 
+  sockets() {
+    this.io.on("connection", (socket) => socketController(socket, this.io));
+  }
+
   listen () {
-    this.app.listen(this.port, () => {
+    this.server.listen(this.port, () => {
       console.log(`App listening on port ${this.port}`)
     })
   }

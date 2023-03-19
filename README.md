@@ -16,3 +16,5 @@ Base de Back-end.
 - Se genera end-point para cargar archivos (en el mismo servidor)
 - Se genera end-point para cargar imagenes para los usuarios y productos (en el mismo servidor)
 - Se genera end-point para mostrar las imagenes de los usuarios y productos (en el mismo servidor)
+- Se genera servicio de sockets
+- Se implementa chat con servicio por sockets
